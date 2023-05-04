@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.managementbyqing.boot.mapper.CategoryMapper">
+
+    <resultMap id="categoryMap" type="com.managementbyqing.boot.entity.Category">
+        <id column="equipment_category_id" property="equipment_category_id"/>
+        <result column="equipment_category_name" property="equipment_category_name"/>
+    </resultMap>
+    <select id="queryAllCategory" resultMap="categoryMap">
+        select * from equ_category
+    </select>
+
+    <select id="addCategory" parameterType="com.managementbyqing.boot.entity.Category">
+        insert into equ_category(equipment_category_name) values(#{equipment_category_name})
+    </select>
+
+    <delete id="deleteCategory" parameterType="int">
+        delete from equ_category where equipment_category_id = #{equipment_category_id}
+    </delete>
+
+    <update id="updateCategory" parameterType="com.managementbyqing.boot.entity.Category">
+        update equ_category
+        <set>
+            <if test="equipment_category_name != null">
+                equipment_category_name = #{equipment_category_name}
+            </if>
+        </set>
+        where equipment_category_id = #{equipment_category_id}
+    </update>
+</mapper>

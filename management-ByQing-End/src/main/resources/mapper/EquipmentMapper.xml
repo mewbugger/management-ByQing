@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.managementbyqing.boot.mapper.EquipmentMapper">
+
+
+    <resultMap id="equipmentMap" type="com.managementbyqing.boot.entity.Equipment">
+        <id column="equipment_id" property="equipment_id"/>
+        <result column="equipment_name" property="equipment_name"/>
+        <result column="installment_date" property="installment_date"></result>
+        <result column="equipment_description" property="equipment_description"></result>
+        <result column="equipment_address" property="equipment_address"></result>
+        <result column="equipment_category_id" property="equipment_category_id"></result>
+    </resultMap>
+
+    <select id="queryAllEquipment" resultMap="equipmentMap">
+        select * from equipment
+    </select>
+
+    <select id="addEquipment" parameterType="com.managementbyqing.boot.entity.Equipment">
+        insert into equipment(equipment_name , installment_date , equipment_description ,
+        equipment_address , equipment_category_id) values(#{equipment_name} , #{installment_date} , #{equipment_description} ,
+        #{equipment_address} , #{equipment_category_id})
+    </select>
+
+    <delete id="deleteEquipment" parameterType="int">
+        delete from equipment where equipment_id = #{equipment_id}
+    </delete>
+
+    <update id="updateEquipment" parameterType="com.managementbyqing.boot.entity.Equipment">
+        update equipment
+        <set>
+            <if test="equipment_name != null">
+                equipment_name = #{equipment_name},
+            </if>
+            <if test="installment_date != null">
+                installment_date = #{installment_date,jdbcType=DATE},
+            </if>
+            <if test="equipment_description != null">
+                equipment_description = #{equipment_description},
+            </if>
+            <if test="equipment_address != null">
+                equipment_address = #{equipment_address},
+            </if>
+            <if test="equipment_category_id != null">
+                equipment_category_id = #{equipment_category_id}
+            </if>
+        </set>
+        where equipment_id = #{equipment_id}
+    </update>
+
+
+
+</mapper>

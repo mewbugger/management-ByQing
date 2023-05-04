@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.managementbyqing.boot.mapper.InspectionMapper">
+
+
+    <resultMap id="inspectionMap" type="com.managementbyqing.boot.entity.Inspection">
+        <id column="inspection_id" property="inspection_id"/>
+        <result column="inspection_date" property="inspection_date"/>
+        <result column="inspection_employee" property="inspection_employee"></result>
+        <result column="inspection_description" property="inspection_description"></result>
+        <result column="equipment_id" property="equipment_id"></result>
+        <result column="status" property="status"></result>
+    </resultMap>
+
+    <select id="queryAllInspection" resultMap="inspectionMap">
+        select * from inspection
+    </select>
+
+    <select id="addInspection" parameterType="com.managementbyqing.boot.entity.Inspection">
+        insert into inspection(inspection_date , inspection_employee , inspection_description ,
+        equipment_id , status) values(#{inspection_date} , #{inspection_employee} , #{inspection_description} ,
+        #{equipment_id} , #{status})
+    </select>
+
+    <delete id="deleteInspection" parameterType="int">
+        delete from inspection where inspection_id = #{inspection_id}
+    </delete>
+
+    <update id="updateInspection" parameterType="com.managementbyqing.boot.entity.Inspection">
+        update inspection
+        <set>
+            <if test="inspection_date != null">
+                inspection_date = #{inspection_date,jdbcType=DATE},
+            </if>
+            <if test="inspection_employee != null">
+                inspection_employee = #{inspection_employee},
+            </if>
+            <if test="inspection_description != null">
+                inspection_description = #{inspection_description},
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
+        </set>
+        where inspection_id = #{inspection_id}
+    </update>
+</mapper>

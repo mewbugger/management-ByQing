@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.managementbyqing.boot.mapper.RequirementMapper">
+    <resultMap id="requirementMap" type="com.managementbyqing.boot.entity.Requirement">
+        <id column="requirement_id" property="requirement_id"/>
+        <result column="requirement_date" property="requirement_date"/>
+        <result column="requirement_employee" property="requirement_employee"></result>
+        <result column="requirement_description" property="requirement_description"></result>
+        <result column="inspection_id" property="inspection_id"></result>
+        <result column="requirement_result" property="requirement_result"></result>
+    </resultMap>
+
+    <select id="queryAllRequirement" resultMap="requirementMap">
+        select * from requirement
+    </select>
+
+    <select id="addRequirement" parameterType="com.managementbyqing.boot.entity.Requirement">
+        insert into requirement(requirement_date , requirement_employee , requirement_description ,
+         inspection_id , requirement_result) values(#{requirement_date} , #{requirement_employee} , #{requirement_description} ,
+         #{inspection_id} , #{requirement_result})
+    </select>
+
+    <delete id="deleteRequirement" parameterType="int">
+        delete from requirement where requirement_id = #{requirement_id}
+    </delete>
+
+    <update id="updateRequirement" parameterType="com.managementbyqing.boot.entity.Requirement">
+        update requirement
+        <set>
+            <if test="requirement_date != null">
+                requirement_date = #{requirement_date,jdbcType=DATE},
+            </if>
+            <if test="requirement_employee != null">
+                requirement_employee = #{requirement_employee},
+            </if>
+            <if test="requirement_description != null">
+                requirement_description = #{requirement_description},
+            </if>
+            <if test="requirement_result != null">
+                requirement_result = #{requirement_result},
+            </if>
+        </set>
+        where requirement_id = #{requirement_id}
+    </update>
+
+
+</mapper>
